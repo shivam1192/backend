@@ -2,6 +2,7 @@
 
 const express = require('express');
 const app = express();
+const cors=require("cors");
 const port = process.env.PORT || 3000 ;       
 const bodyParser = require('body-parser');
 const logger = require('morgan');
@@ -14,9 +15,10 @@ require('express-async-errors');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/Auth');
 
+app.use(cors());
 app.use(express.json());
 app.use(logger('dev'));
-app.use('/api/chat',routes);
+app.use('/api',routes);
 
 app.listen(port);
 

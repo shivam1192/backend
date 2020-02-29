@@ -23,6 +23,15 @@ require('express-async-errors');
 
     });
 
+    router.get('/allUsers' , async(req , res) => {
+
+        let users = {};
+        users = await User.find();
+
+        res.send(users);
+
+    });
+
     router.post('/register' , async(req,res) => {
 
         const name = req.body.name;
@@ -46,22 +55,51 @@ require('express-async-errors');
 
     });
 
-    router.post('/authenticate' , async(req,res) => {
+    // router.post('/authenticate' , async(req,res) => {
 
-        const credentials = auth(req);
+    //     console.log(req.body);
+    //     const email = req.body.email;
+	// 	const password = req.body.password;
 
-        if(!credentials)
+    
+
+    //     if(!email || !password || !email.trim() || !password.trim())
+    //     {
+    //         res.status(400).json({message: 'Invalid Request'});
+    //     }
+    //     else
+    //     {
+    //         console.log();
+    //         const response = await login.loginUser(email , password);
+
+    //         const token = await jwt.sign({ _id: response._id } , config.secret);
+    //         console.log(token);
+    //          res.setHeader('x-access-token' , token);
+    //         res.status(200).send(response);
+    //     }
+        
+    // });
+
+    router.post('/login',async (req,res)=>{
+       // console.log(req.body);
+        const email = req.body.email;
+		const password = req.body.password;
+
+    
+
+        if(!email || !password || !email.trim() || !password.trim())
         {
             res.status(400).json({message: 'Invalid Request'});
         }
         else
         {
-            console.log(credentials);
-            const response = await login.loginUser(credentials.name , credentials.pass);
+            console.log();
+            const response = await login.loginUser(email , password);
 
-            const token = jwt.sign({ _id: response._id } , config.secret);
-            res.setHeader('x-access-token' , token);
-            res.status(200).send(response);
+            const token = await jwt.sign({ _id: response._id, name: response.name, email: response.email } , config.secret);
+            console.log(token);
+            // res.setHeader('x-access-token' , token);
+            res.status(200).send(token);
         }
         
     });
