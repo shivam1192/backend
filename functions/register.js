@@ -13,8 +13,7 @@ exports.registerUser = async (name , email , password) => {
 
         name: name,
         email: email,
-        password: hash,
-        otp: null
+        password: hash
 
     });
 
