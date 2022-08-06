@@ -29,7 +29,7 @@
     "node-gyp": "^5.0.7",
     "nodemailer": "^6.4.2",
     "nodemon": "^2.0.2",
-    "otp-generator": "^1.1.0",
+    "otp-generator": "^3.0.0",
     "socket.io": "^2.3.0"
   }
 }
